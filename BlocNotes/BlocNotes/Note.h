@@ -8,12 +8,13 @@
 
 #import <Realm/Realm.h>
 
+//Created a new Realm Model Object called Note with the appropriate properties
+
 @interface Note : RLMObject
 
 @property NSString *title;
 @property NSString *body;
-@property NSString *search;
-@property NSTimeInterval date;
+@property NSDate *date;
 
 @end
 

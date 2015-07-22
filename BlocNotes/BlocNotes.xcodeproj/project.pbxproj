@@ -12,6 +12,8 @@
 		BC5038761B5F2E9400DFA457 /* NewEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5038751B5F2E9400DFA457 /* NewEntryViewController.m */; };
 		BCAD09611B5FB87300C716CE /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; };
 		BCAD09621B5FB87300C716CE /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BCAD096A1B5FDB7E00C716CE /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAD09691B5FDB7E00C716CE /* SearchResultsTableViewController.m */; };
+		BCAD096D1B5FE2EC00C716CE /* NotesDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAD096C1B5FE2EC00C716CE /* NotesDataSource.m */; };
 		BCD4D6E51B5F232300190118 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6E41B5F232300190118 /* main.m */; };
 		BCD4D6E81B5F232300190118 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6E71B5F232300190118 /* AppDelegate.m */; };
 		BCD4D6EB1B5F232300190118 /* BlocNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6E91B5F232300190118 /* BlocNotes.xcdatamodeld */; };
@@ -53,6 +55,10 @@
 		BC5038741B5F2E9400DFA457 /* NewEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEntryViewController.h; sourceTree = "<group>"; };
 		BC5038751B5F2E9400DFA457 /* NewEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewEntryViewController.m; sourceTree = "<group>"; };
 		BCAD09601B5FB87300C716CE /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		BCAD09681B5FDB7E00C716CE /* SearchResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsTableViewController.h; sourceTree = "<group>"; };
+		BCAD09691B5FDB7E00C716CE /* SearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsTableViewController.m; sourceTree = "<group>"; };
+		BCAD096B1B5FE2EC00C716CE /* NotesDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesDataSource.h; sourceTree = "<group>"; };
+		BCAD096C1B5FE2EC00C716CE /* NotesDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesDataSource.m; sourceTree = "<group>"; };
 		BCD4D6DF1B5F232300190118 /* BlocNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlocNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4D6E31B5F232300190118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCD4D6E41B5F232300190118 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -125,6 +131,10 @@
 				BCD4D6EE1B5F232300190118 /* LaunchScreen.xib */,
 				BCD4D6E91B5F232300190118 /* BlocNotes.xcdatamodeld */,
 				BCD4D6E21B5F232300190118 /* Supporting Files */,
+				BCAD09681B5FDB7E00C716CE /* SearchResultsTableViewController.h */,
+				BCAD09691B5FDB7E00C716CE /* SearchResultsTableViewController.m */,
+				BCAD096B1B5FE2EC00C716CE /* NotesDataSource.h */,
+				BCAD096C1B5FE2EC00C716CE /* NotesDataSource.m */,
 			);
 			path = BlocNotes;
 			sourceTree = "<group>";
@@ -274,9 +284,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCAD096D1B5FE2EC00C716CE /* NotesDataSource.m in Sources */,
 				BCD4D6E81B5F232300190118 /* AppDelegate.m in Sources */,
 				BCD4D6EB1B5F232300190118 /* BlocNotes.xcdatamodeld in Sources */,
 				BC5038761B5F2E9400DFA457 /* NewEntryViewController.m in Sources */,
+				BCAD096A1B5FDB7E00C716CE /* SearchResultsTableViewController.m in Sources */,
 				BCD4D6E51B5F232300190118 /* main.m in Sources */,
 				BC5038731B5F2D4000DFA457 /* EntryListViewController.m in Sources */,
 				BCFE21B61B5F272D00D33A02 /* Note.m in Sources */,

@@ -8,6 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EntryListViewController : UITableViewController
-
+@interface EntryListViewController : UITableViewController <UISearchResultsUpdating>
 @end

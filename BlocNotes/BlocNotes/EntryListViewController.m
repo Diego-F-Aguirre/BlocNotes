@@ -7,8 +7,16 @@
 //
 
 #import "EntryListViewController.h"
+#import "Note.h"
+#import "SearchResultsTableViewController.h"
+#import "NotesDataSource.h"
 
 @interface EntryListViewController ()
+
+//A token is needed to save the data source as well as to be able to recall it
+@property RLMNotificationToken *token;
+@property UISearchController *searchController;
+@property NotesDataSource *dataSource;
 
 @end
 
@@ -17,6 +25,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.dataSource = [NotesDataSource new];
+    self.tableView.dataSource = self.dataSource;
+    
+    self.token = [[RLMRealm defaultRealm] addNotificationBlock:^(NSString *notification, RLMRealm *realm) {
+        self.dataSource.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
+        [self.tableView reloadData];
+    }];
+    self.dataSource.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
+    
+    UINavigationController *searchResultsController = [[self storyboard] instantiateViewControllerWithIdentifier:@"notesTableSearchResultsNavigationController"];
+    
+    //Programmatically created the search bar and placed it's position
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController: searchResultsController];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x,
+                                                       self.searchController.searchBar.frame.origin.y,
+                                                       self.searchController.searchBar.frame.size.width, 44.0);
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -24,34 +52,35 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)dealloc
+{
+    [[RLMRealm defaultRealm] removeNotification:self.token];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+     NSString *searchString = self.searchController.searchBar.text;
+    RLMResults *filteredNotes = [self updateFilteredContentForSearchedText:searchString];
+    if (self.searchController.searchResultsController)
+    {
+        UINavigationController *navController = (UINavigationController *)self.searchController.searchResultsController;
+        
+        SearchResultsTableViewController *vc = (SearchResultsTableViewController *)navController.topViewController;
+        vc.dataSource.notes = filteredNotes;
+        [vc.tableView reloadData];
+    }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (RLMResults *)updateFilteredContentForSearchedText:(NSString *)searchedText
+{
+    return [[Note objectsWhere:[NSString stringWithFormat:@"title CONTAINS[c] '%@' OR body CONTAINS[c] '%@'", searchedText, searchedText]] sortedResultsUsingProperty:@"date" ascending:NO];
 }
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
 
 /*
 // Override to support conditional editing of the table view.

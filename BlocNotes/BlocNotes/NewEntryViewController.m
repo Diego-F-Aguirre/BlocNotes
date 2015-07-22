@@ -7,6 +7,7 @@
 //
 
 #import "NewEntryViewController.h"
+#import "Note.h"
 
 @interface NewEntryViewController ()
 
@@ -26,17 +27,38 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Created a dismiss method to call when the cancel or done button are pressed
 - (void)dismissSelf{
 
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+//Imported the Realm Model object file to call when creating a new Note.
+- (void)insertNoteTitle{
+
+    Note *newNote = [Note new];
+    newNote.title = self.noteTitle.text;
+    newNote.body = @"";
+    newNote.date = [NSDate date];
+    
+    //Must instatiate a realm database
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    //To write new note to database we must first call beginWritTransaction , add the new object and then commitWriteTransaction. This actually saves the object
+    [realm beginWriteTransaction];
+    [realm addObject:newNote];
+    [realm commitWriteTransaction];
+    
 }
 
 - (IBAction)cancelWasPressed:(id)sender {
     [self dismissSelf];
     
 }
+
+// Call the insertNoteTitle and then dismiss the view
 - (IBAction)doneWasPressed:(id)sender {
-    
+    [self insertNoteTitle];
     [self dismissSelf];
     
 }
