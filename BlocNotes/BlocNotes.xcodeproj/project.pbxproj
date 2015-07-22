@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC50386E1B5F2B4500DFA457 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC50386D1B5F2B4500DFA457 /* Realm.framework */; };
 		BC5038701B5F2BCB00DFA457 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC50386F1B5F2BCB00DFA457 /* MainStoryboard.storyboard */; };
+		BC5038731B5F2D4000DFA457 /* EntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5038721B5F2D4000DFA457 /* EntryListViewController.m */; };
+		BC5038761B5F2E9400DFA457 /* NewEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5038751B5F2E9400DFA457 /* NewEntryViewController.m */; };
+		BCAD09611B5FB87300C716CE /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; };
+		BCAD09621B5FB87300C716CE /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BCD4D6E51B5F232300190118 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6E41B5F232300190118 /* main.m */; };
 		BCD4D6E81B5F232300190118 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6E71B5F232300190118 /* AppDelegate.m */; };
 		BCD4D6EB1B5F232300190118 /* BlocNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6E91B5F232300190118 /* BlocNotes.xcdatamodeld */; };
@@ -29,9 +32,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BCAD09631B5FB87300C716CE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BCAD09621B5FB87300C716CE /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		BC50386D1B5F2B4500DFA457 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		BC50386F1B5F2BCB00DFA457 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		BC5038711B5F2D4000DFA457 /* EntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryListViewController.h; sourceTree = "<group>"; };
+		BC5038721B5F2D4000DFA457 /* EntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryListViewController.m; sourceTree = "<group>"; };
+		BC5038741B5F2E9400DFA457 /* NewEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEntryViewController.h; sourceTree = "<group>"; };
+		BC5038751B5F2E9400DFA457 /* NewEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewEntryViewController.m; sourceTree = "<group>"; };
+		BCAD09601B5FB87300C716CE /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		BCD4D6DF1B5F232300190118 /* BlocNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlocNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4D6E31B5F232300190118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCD4D6E41B5F232300190118 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC50386E1B5F2B4500DFA457 /* Realm.framework in Frameworks */,
+				BCAD09611B5FB87300C716CE /* Realm.framework in Frameworks */,
 				BCFE21B81B5F27B000D33A02 /* libc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,7 +92,7 @@
 		BCD4D6D61B5F232300190118 = {
 			isa = PBXGroup;
 			children = (
-				BC50386D1B5F2B4500DFA457 /* Realm.framework */,
+				BCAD09601B5FB87300C716CE /* Realm.framework */,
 				BCFE21B71B5F27B000D33A02 /* libc++.dylib */,
 				BCD4D6E11B5F232300190118 /* BlocNotes */,
 				BCD4D6F81B5F232300190118 /* BlocNotesTests */,
@@ -94,8 +115,12 @@
 				BCD4D6E61B5F232300190118 /* AppDelegate.h */,
 				BCD4D6E71B5F232300190118 /* AppDelegate.m */,
 				BCFE21B41B5F272D00D33A02 /* Note.h */,
-				BC50386F1B5F2BCB00DFA457 /* MainStoryboard.storyboard */,
 				BCFE21B51B5F272D00D33A02 /* Note.m */,
+				BC5038711B5F2D4000DFA457 /* EntryListViewController.h */,
+				BC5038721B5F2D4000DFA457 /* EntryListViewController.m */,
+				BC5038741B5F2E9400DFA457 /* NewEntryViewController.h */,
+				BC5038751B5F2E9400DFA457 /* NewEntryViewController.m */,
+				BC50386F1B5F2BCB00DFA457 /* MainStoryboard.storyboard */,
 				BCD4D6EC1B5F232300190118 /* Images.xcassets */,
 				BCD4D6EE1B5F232300190118 /* LaunchScreen.xib */,
 				BCD4D6E91B5F232300190118 /* BlocNotes.xcdatamodeld */,
@@ -140,6 +165,8 @@
 				BCD4D6DB1B5F232300190118 /* Sources */,
 				BCD4D6DC1B5F232300190118 /* Frameworks */,
 				BCD4D6DD1B5F232300190118 /* Resources */,
+				BCAD09631B5FB87300C716CE /* Embed Frameworks */,
+				BCAD09641B5FBA7400C716CE /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -225,6 +252,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BCAD09641B5FBA7400C716CE /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BCD4D6DB1B5F232300190118 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -232,7 +276,9 @@
 			files = (
 				BCD4D6E81B5F232300190118 /* AppDelegate.m in Sources */,
 				BCD4D6EB1B5F232300190118 /* BlocNotes.xcdatamodeld in Sources */,
+				BC5038761B5F2E9400DFA457 /* NewEntryViewController.m in Sources */,
 				BCD4D6E51B5F232300190118 /* main.m in Sources */,
+				BC5038731B5F2D4000DFA457 /* EntryListViewController.m in Sources */,
 				BCFE21B61B5F272D00D33A02 /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
