@@ -19,7 +19,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.definesPresentationContext = true;
-    // Do any additional setup after loading the view.
+
+    //Initialize a UITapGestureRecognizer to require one tap to make the textView editable. In IB the text view is initialized as uneditable to allow UIDataDetector to stay active.
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editTextRecognizerTabbed:)];
+    recognizer.delegate = self;
+    recognizer.numberOfTapsRequired = 1;
+    [self.noteBodyTextView addGestureRecognizer:recognizer];
+}
+
+//Method to turn make the textView editable as well as turn off UIDataDetector
+- (void) editTextRecognizerTabbed:(UITapGestureRecognizer *) aRecognizer;
+{
+    self.noteBodyTextView.dataDetectorTypes = UIDataDetectorTypeNone;
+    self.noteBodyTextView.editable = YES;
+    [self.noteBodyTextView becomeFirstResponder];
+}
+//Turn off editable on textView and turn on UIDataDetector
+- (void)textViewDidEndEditing:(UITextView *)textView;
+{
+    self.noteBodyTextView.editable = NO;
+    self.noteBodyTextView.dataDetectorTypes = UIDataDetectorTypeAll;
 }
 
 - (void)viewWillAppear:(BOOL)animated
