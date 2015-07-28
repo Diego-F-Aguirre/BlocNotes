@@ -13,5 +13,6 @@
 @interface SearchResultsTableViewController : UITableViewController
 
 @property (strong, nonatomic) NotesDataSource *dataSource;
+@property UISearchController *searchController;
 
 @end

@@ -13,8 +13,8 @@
 @interface Note : RLMObject
 
 @property NSString *title;
-@property NSString *body;
 @property NSDate *date;
+@property NSString *body;
 
 @end
 

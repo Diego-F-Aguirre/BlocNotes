@@ -1,26 +1,30 @@
 //
-//  NewEntryViewController.m
+//  EditEntryViewController.m
 //  BlocNotes
 //
-//  Created by Diego Aguirre on 7/21/15.
+//  Created by Diego Aguirre on 7/27/15.
 //  Copyright (c) 2015 Diego Aguirre. All rights reserved.
 //
 
-#import "NewEntryViewController.h"
+#import "EditEntryViewController.h"
 #import "Note.h"
 
-@interface NewEntryViewController ()
-
-@property (strong, nonatomic) IBOutlet UITextField *noteTitle;
+@interface EditEntryViewController ()
 @property (strong, nonatomic) IBOutlet UITextView *noteBodyTextView;
 
 @end
 
-@implementation NewEntryViewController
+@implementation EditEntryViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.definesPresentationContext = true;
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.noteBodyTextView.text = self.note.body;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,43 +32,30 @@
     // Dispose of any resources that can be recreated.
 }
 
-//Created a dismiss method to call when the cancel or done button are pressed
+//Created a dismiss method to call when back button is pressed
 - (void)dismissSelf{
-
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-//Imported the Realm Model object file to call when creating a new Note.
-- (void)insertNoteTitle{
+//Recall an instance defaultRealm which contains our databse/information
+- (void)editNote{
 
-    // Alloc and instatiate the realm note model and set it's properties
-    Note *newNote = [Note new];
-    newNote.title = self.noteTitle.text;
-    //create a property for the note body and make the text editable
-    newNote.body = self.noteBodyTextView.text;
-    newNote.date = [NSDate date];
     
-    //Must instatiate a realm database
     RLMRealm *realm = [RLMRealm defaultRealm];
     
     //To write new note to database we must first call beginWritTransaction , add the new object and then commitWriteTransaction. This actually saves the object
     [realm beginWriteTransaction];
-    [realm addObject:newNote];
+    //simply include the property of the textview you want to edit which recalls the body from Note.h
+    self.note.body = self.noteBodyTextView.text;
     [realm commitWriteTransaction];
-    
 }
 
-- (IBAction)cancelWasPressed:(id)sender {
+//Back button returns to previous screen and saves updated info
+- (IBAction)backButtonWasPressed:(id)sender {
+    [self editNote];
     [self dismissSelf];
-    
 }
 
-// Call the insertNoteTitle and then dismiss the view
-- (IBAction)doneWasPressed:(id)sender {
-    [self insertNoteTitle];
-    [self dismissSelf];
-    
-}
 
 /*
 #pragma mark - Navigation

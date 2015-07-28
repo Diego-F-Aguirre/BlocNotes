@@ -7,6 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface EntryListViewController : UITableViewController <UISearchResultsUpdating>
+//Add UISearchResultsUpdating protocol to update with new user info
+@interface EntryListViewController : UITableViewController <UISearchResultsUpdating, UISearchBarDelegate>
 @end

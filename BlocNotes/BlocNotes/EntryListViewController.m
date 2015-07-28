@@ -10,6 +10,7 @@
 #import "Note.h"
 #import "SearchResultsTableViewController.h"
 #import "NotesDataSource.h"
+#import "EditEntryViewController.h"
 
 @interface EntryListViewController ()
 
@@ -25,9 +26,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //instatiate the DataSource and set it to the tableView dataSource
     self.dataSource = [NotesDataSource new];
     self.tableView.dataSource = self.dataSource;
     
+    //instatiate the token and add a notification block to reload data when it has been updated
     self.token = [[RLMRealm defaultRealm] addNotificationBlock:^(NSString *notification, RLMRealm *realm) {
         self.dataSource.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
         [self.tableView reloadData];
@@ -35,14 +38,13 @@
     self.dataSource.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
     
     UINavigationController *searchResultsController = [[self storyboard] instantiateViewControllerWithIdentifier:@"notesTableSearchResultsNavigationController"];
-    
-    //Programmatically created the search bar and placed it's position
+    //Create the search controler and set it to the UINavigationController and place it's position
     self.searchController = [[UISearchController alloc] initWithSearchResultsController: searchResultsController];
+    ((SearchResultsTableViewController *)searchResultsController.topViewController).searchController = self.searchController;
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x,
                                                        self.searchController.searchBar.frame.origin.y,
                                                        self.searchController.searchBar.frame.size.width, 44.0);
-    
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
     // Uncomment the following line to preserve selection between presentations.
@@ -52,6 +54,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+//After the token has been called it must be deallocated
 - (void)dealloc
 {
     [[RLMRealm defaultRealm] removeNotification:self.token];
@@ -64,7 +67,7 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
-     NSString *searchString = self.searchController.searchBar.text;
+    NSString *searchString = self.searchController.searchBar.text;
     RLMResults *filteredNotes = [self updateFilteredContentForSearchedText:searchString];
     if (self.searchController.searchResultsController)
     {
@@ -76,10 +79,22 @@
     }
 
 }
-
+//Filter method to detect case sensitive words in both the title and the body of the note
 - (RLMResults *)updateFilteredContentForSearchedText:(NSString *)searchedText
 {
     return [[Note objectsWhere:[NSString stringWithFormat:@"title CONTAINS[c] '%@' OR body CONTAINS[c] '%@'", searchedText, searchedText]] sortedResultsUsingProperty:@"date" ascending:NO];
+}
+
+//Identify editEntrySeque as the main destination so a cell/note can be modified when searched for
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"editEntrySegue"])
+    {
+        EditEntryViewController *dest = (EditEntryViewController *)segue.destinationViewController;
+        UITableViewCell *cell = (UITableViewCell*)sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        dest.note = self.dataSource.notes[indexPath.row];
+    }
 }
 
 /*

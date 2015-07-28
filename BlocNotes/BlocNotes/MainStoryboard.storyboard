@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vpk-0M-yEg">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--New Entry View Controller-->
@@ -16,13 +17,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SxE-Tv-1is">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SxE-Tv-1is">
                                 <rect key="frame" x="16" y="108" width="288" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mVm-gW-90v">
+                                <rect key="frame" x="16" y="151" width="288" height="397"/>
+                                <color key="backgroundColor" red="0.92546559340000001" green="0.91013563090000005" blue="0.85599182679999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SxE-Tv-1is" firstAttribute="leading" secondItem="rTj-8o-LMk" secondAttribute="leadingMargin" id="08l-hE-T4i"/>
+                            <constraint firstItem="SxE-Tv-1is" firstAttribute="top" secondItem="iEq-yW-ny5" secondAttribute="bottom" constant="44" id="Es5-iV-x1v"/>
+                            <constraint firstItem="nMJ-xe-zco" firstAttribute="top" secondItem="mVm-gW-90v" secondAttribute="bottom" constant="20" id="Kfx-a6-pp2"/>
+                            <constraint firstItem="mVm-gW-90v" firstAttribute="leading" secondItem="rTj-8o-LMk" secondAttribute="leadingMargin" id="Qb1-sx-tfl"/>
+                            <constraint firstItem="mVm-gW-90v" firstAttribute="trailing" secondItem="rTj-8o-LMk" secondAttribute="trailingMargin" id="SKZ-9A-JQi"/>
+                            <constraint firstItem="SxE-Tv-1is" firstAttribute="trailing" secondItem="rTj-8o-LMk" secondAttribute="trailingMargin" id="icp-Vx-Xzt"/>
+                            <constraint firstItem="mVm-gW-90v" firstAttribute="top" secondItem="iEq-yW-ny5" secondAttribute="bottom" constant="87" id="mrl-7X-1Bc"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="asb-XO-3TM">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="0c2-ml-oso">
@@ -37,12 +53,55 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noteBodyTextView" destination="mVm-gW-90v" id="cc4-y7-AJq"/>
                         <outlet property="noteTitle" destination="SxE-Tv-1is" id="DfM-3T-TMC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n10-4K-xbH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1104" y="-425"/>
+        </scene>
+        <!--Edit Entry View Controller-->
+        <scene sceneID="FFc-Iq-nLb">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="sdm-Ab-WH3" customClass="EditEntryViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ttk-XG-Cd8"/>
+                        <viewControllerLayoutGuide type="bottom" id="ILe-vK-gMx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GHa-Gi-tEG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tco-og-zxJ">
+                                <rect key="frame" x="16" y="89" width="288" height="454"/>
+                                <color key="backgroundColor" red="0.92546559343434343" green="0.91013563087768867" blue="0.85599182681402208" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tco-og-zxJ" firstAttribute="top" secondItem="ttk-XG-Cd8" secondAttribute="bottom" constant="25" id="8sa-Qt-EXs"/>
+                            <constraint firstItem="tco-og-zxJ" firstAttribute="leading" secondItem="GHa-Gi-tEG" secondAttribute="leadingMargin" id="NsP-2A-mju"/>
+                            <constraint firstItem="ILe-vK-gMx" firstAttribute="top" secondItem="tco-og-zxJ" secondAttribute="bottom" constant="25" id="c6H-fu-TjA"/>
+                            <constraint firstItem="tco-og-zxJ" firstAttribute="trailing" secondItem="GHa-Gi-tEG" secondAttribute="trailingMargin" id="hOG-Xh-oMn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Crg-bm-m1T">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="erV-pw-xrE">
+                            <connections>
+                                <action selector="backButtonWasPressed:" destination="sdm-Ab-WH3" id="GiC-cD-F2j"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="noteBodyTextView" destination="tco-og-zxJ" id="czZ-Qh-x6i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WqP-sh-AMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1069" y="219"/>
         </scene>
         <!--Entry List View Controller-->
         <scene sceneID="rtF-17-SVs">
@@ -53,7 +112,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="VmE-fX-Ew8" detailTextLabel="F8f-qG-T9n" style="IBUITableViewCellStyleValue1" id="MSK-uz-JPr">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="VmE-fX-Ew8" detailTextLabel="F8f-qG-T9n" style="IBUITableViewCellStyleValue1" id="MSK-uz-JPr">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MSK-uz-JPr" id="OnR-Iq-iqi">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -61,7 +120,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VmE-fX-Ew8">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F8f-qG-T9n">
@@ -72,6 +131,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="sdm-Ab-WH3" kind="push" identifier="editEntrySegue" id="c2q-v0-yJ2"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -110,7 +172,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="nKU-dl-yck" detailTextLabel="FdT-hd-eMr" style="IBUITableViewCellStyleValue1" id="DnJ-Tm-nWQ">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="nKU-dl-yck" detailTextLabel="FdT-hd-eMr" style="IBUITableViewCellStyleValue1" id="DnJ-Tm-nWQ">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DnJ-Tm-nWQ" id="lhg-86-Gj3">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -118,7 +180,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nKU-dl-yck">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FdT-hd-eMr">
@@ -129,6 +191,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="sdm-Ab-WH3" kind="push" identifier="editEntrySegue" id="xjo-ou-m4V"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -140,7 +205,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NiD-Zm-xT9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1636" y="225"/>
+            <point key="canvasLocation" x="1052" y="893"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uaH-K8-1jP">
@@ -194,7 +259,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T43-4w-PKY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1104" y="225"/>
+            <point key="canvasLocation" x="628" y="893"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -202,4 +267,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="c2q-v0-yJ2"/>
+    </inferredMetricsTieBreakers>
 </document>

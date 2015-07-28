@@ -8,6 +8,7 @@
 
 #import "SearchResultsTableViewController.h"
 #import "Note.h"
+#import "EditEntryViewController.h"
 
 @interface SearchResultsTableViewController ()
 
@@ -17,15 +18,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.dataSource = [NotesDataSource new];
     self.tableView.dataSource = self.dataSource;
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.searchController.searchBar.hidden = NO;
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"editEntrySegue"])
+    {
+        EditEntryViewController *dest = (EditEntryViewController *)segue.destinationViewController;
+        UITableViewCell *cell = (UITableViewCell*)sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        dest.note = self.dataSource.notes[indexPath.row];
+        self.searchController.searchBar.hidden = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
