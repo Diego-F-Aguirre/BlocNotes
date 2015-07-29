@@ -16,5 +16,6 @@
 @interface NotesDataSource : NSObject <UITableViewDataSource>
 
 @property (strong, nonatomic) RLMResults *notes;
+@property (nonatomic, strong) RLMResults *array;
 
 @end
