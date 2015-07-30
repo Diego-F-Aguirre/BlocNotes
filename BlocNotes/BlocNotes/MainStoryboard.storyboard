@@ -95,6 +95,11 @@
                                 <action selector="backButtonWasPressed:" destination="sdm-Ab-WH3" id="GiC-cD-F2j"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="D7e-IN-SrT">
+                            <connections>
+                                <action selector="shareButtonWasPressed:" destination="sdm-Ab-WH3" id="Lyv-78-yAu"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="noteBodyTextView" destination="tco-og-zxJ" id="czZ-Qh-x6i"/>
