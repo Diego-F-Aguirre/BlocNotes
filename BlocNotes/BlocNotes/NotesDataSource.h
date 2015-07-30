@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <Realm/Realm.h>
 #import "Note.h"
+#import "EntryListViewController.h"
 
 //Created a new NSObject called NotesDataSource that serves as the main data source to be called throughout the app. 
 
@@ -17,5 +18,6 @@
 
 @property (strong, nonatomic) RLMResults *notes;
 @property (nonatomic, strong) RLMResults *array;
+@property(nonatomic,retain) UITableView *tableView;
 
 @end

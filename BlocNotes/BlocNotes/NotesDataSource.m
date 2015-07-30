@@ -8,7 +8,7 @@
 
 #import "NotesDataSource.h"
 
-@class EntryListViewController;
+
 
 @implementation NotesDataSource
 
@@ -44,7 +44,8 @@
         NSLog(@"%@",self.array[indexPath.row]);
         [realm deleteObject:self.array[indexPath.row]];
         [realm commitWriteTransaction];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];}
+        
+    }
 }
 
 @end
