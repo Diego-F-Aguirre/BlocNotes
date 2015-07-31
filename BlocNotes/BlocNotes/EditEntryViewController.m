@@ -80,7 +80,7 @@
     NSMutableArray *itemToShare = [NSMutableArray array];
     
     if (self.noteBodyTextView.text > 0) {
-        [itemToShare addObject:self.noteBodyTextView];
+        [itemToShare addObject:self.noteBodyTextView.text];
     }
     
     if (itemToShare.count > 0) {
