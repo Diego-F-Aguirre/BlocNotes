@@ -38,11 +38,7 @@
 - (void)insertNoteTitle{
 
     // Alloc and instatiate the realm note model and set it's properties
-    Note *newNote = [Note new];
-    newNote.title = self.noteTitle.text;
-    //create a property for the note body and make the text editable
-    newNote.body = self.noteBodyTextView.text;
-    newNote.date = [NSDate date];
+    Note *newNote = [[Note alloc] initWithTitle:self.noteTitle.text body:self.noteBodyTextView.text];
     
     //Must instatiate a realm database
     RLMRealm *realm = [RLMRealm defaultRealm];

@@ -18,6 +18,7 @@
 @property RLMNotificationToken *token;
 @property UISearchController *searchController;
 @property NotesDataSource *dataSource;
+@property NSUInteger oldRowNumber;
 //@property (nonatomic, strong) RLMResults *array;
 
 @end
@@ -26,17 +27,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.oldRowNumber = 0;
     //instatiate the DataSource and set it to the tableView dataSource
     self.dataSource = [NotesDataSource new];
     self.tableView.dataSource = self.dataSource;
     
     //instatiate the token and add a notification block to reload data when it has been updated
     self.token = [[RLMRealm defaultRealm] addNotificationBlock:^(NSString *notification, RLMRealm *realm) {
-        self.dataSource.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
-        [self.tableView reloadData];
+        if (self.dataSource.notes.count >= self.oldRowNumber)
+        {
+            [self.tableView reloadData];
+        }
+        self.oldRowNumber = self.dataSource.notes.count;
     }];
-    self.dataSource.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
+    [self.dataSource updateDataSource];
+    self.oldRowNumber = self.dataSource.notes.count;
     
     UINavigationController *searchResultsController = [[self storyboard] instantiateViewControllerWithIdentifier:@"notesTableSearchResultsNavigationController"];
     //Create the search controler and set it to the UINavigationController and place it's position

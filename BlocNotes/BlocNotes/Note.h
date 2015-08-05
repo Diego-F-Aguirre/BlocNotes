@@ -16,6 +16,8 @@
 @property NSDate *date;
 @property NSString *body;
 
+-(instancetype) initWithTitle:(NSString *)title body:(NSString*)body;
+
 @end
 
 // This protocol enables typed collections. i.e.:

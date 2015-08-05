@@ -24,6 +24,32 @@
 //    return @[];
 //}
 
+- (instancetype) init
+{
+    if ([super init])
+    {
+        self.title = @"";
+        self.body = @"";
+        self.date = [NSDate date];
+    }
+    return self;
+}
 
+-(instancetype) initWithTitle:(NSString *)title body:(NSString*)body
+{
+    if ([self init])
+    {
+        if (title)
+        {
+            self.title = title;
+        }
+        if (body)
+        {
+            self.body = body;
+        }
+       
+    }
+    return self;
+}
 
 @end

@@ -38,14 +38,19 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        self.array = [Note allObjects];
         RLMRealm *realm = RLMRealm.defaultRealm;
         [realm beginWriteTransaction];
-        NSLog(@"%@",self.array[indexPath.row]);
-        [realm deleteObject:self.array[indexPath.row]];
+        NSLog(@"%@",self.notes[indexPath.row]);
+        [realm deleteObject:self.notes[indexPath.row]];
         [realm commitWriteTransaction];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
     }
+}
+
+- (void)updateDataSource
+{
+    self.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
 }
 
 @end
