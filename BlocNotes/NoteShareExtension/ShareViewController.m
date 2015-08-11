@@ -27,9 +27,15 @@
 
 - (void)didSelectPost {
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
-    
-    Note *newNote = [Note createNoteWithTitle:self.contentText body:self.selectedText];
-    [newNote save];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.diegoa3d.BlocNotes"];
+    NSArray *existingPendingPosts = [sharedDefaults objectForKey:@"notesPending"];
+    if (existingPendingPosts == nil)
+    {
+        existingPendingPosts = @[];
+    }
+    NSMutableArray *array = [existingPendingPosts mutableCopy];
+    [array addObject:@{@"title" : self.contentText, @"body" : self.selectedText, @"date" : [NSDate date]}];
+    [sharedDefaults setObject:array forKey:@"notesPending"];
     
     // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
     [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];

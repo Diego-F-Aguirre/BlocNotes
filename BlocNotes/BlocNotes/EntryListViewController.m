@@ -57,11 +57,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //Add iCloud observers
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storesWillChange) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storesDidChange) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContent:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storesWillChange) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storesDidChange) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContent:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
 }
 
 #pragma mark = iCloud Methods

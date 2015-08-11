@@ -21,11 +21,24 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //[RLMRealm setDefaultRealmPath:[ICloudSyncHelper realmDatabaseURL].path];
+   
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    
     return YES;
+}
+
+- (void)syncPendingNotes
+{
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.diegoa3d.BlocNotes"];
+    NSArray *pendingNotes = [sharedDefaults objectForKey:@"notesPending"];
+    for (NSDictionary *note in pendingNotes)
+    {
+        Note *newNote = [Note createNoteWithTitle:note[@"title"] body:note[@"body"] date:note[@"date"]];
+        [newNote save];
+    }
+    [sharedDefaults setObject:@[] forKey:@"notesPending"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -33,6 +46,11 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [self syncPendingNotes];
+}
 
 #pragma mark - iCloud Methods
 

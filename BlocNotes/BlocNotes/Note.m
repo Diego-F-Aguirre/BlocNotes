@@ -16,6 +16,13 @@
 @dynamic body;
 @dynamic date;
 
++ (Note *)createNoteWithTitle:(NSString *)title body:(NSString *)body date:(NSDate *)date
+{
+    Note *newNote = [self createNoteWithTitle:title body:body];
+    [newNote setValue:date forKey:@"date"];
+    return newNote;
+}
+
 + (Note *)createNoteWithTitle:(NSString *)title body:(NSString *)body
 {
     

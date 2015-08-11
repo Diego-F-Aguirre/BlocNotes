@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * body;
 @property (nonatomic, retain) NSDate * date;
 
++ (Note *)createNoteWithTitle:(NSString *)title body:(NSString *)body date:(NSDate *)date;
 + (Note *)createNoteWithTitle:(NSString *)title body:(NSString *)body;
 - (void)save;
 
