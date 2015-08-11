@@ -10,6 +10,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Realm/Realm.h>
 #import "Note.h"
+#import "ICloudSyncHelper.h"
 
 @interface ShareViewController ()
 
@@ -27,14 +28,8 @@
 - (void)didSelectPost {
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    
-    Note *newNote = [[Note alloc] initWithTitle:self.contentText body:self.selectedText];
-    
-    [realm beginWriteTransaction];
-    [realm addObject:newNote];
-    [realm commitWriteTransaction];
+    Note *newNote = [Note createNoteWithTitle:self.contentText body:self.selectedText];
+    [newNote save];
     
     // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
     [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
@@ -44,11 +39,6 @@
 {
     
     [super viewDidLoad];
-    
-    
-    NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.diegoa3d.BlocNotes"];
-    NSString *realmPath = [directory.path stringByAppendingPathComponent:@"db.realm"];
-    [RLMRealm setDefaultRealmPath:realmPath];
     
     for (NSExtensionItem *item in self.extensionContext.inputItems) {
         for (NSItemProvider *itemProvider in item.attachments) {

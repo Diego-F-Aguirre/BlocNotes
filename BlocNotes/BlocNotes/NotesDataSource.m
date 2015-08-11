@@ -7,15 +7,35 @@
 //
 
 #import "NotesDataSource.h"
-
-
+#import "CoreDataStack.h"
 
 @implementation NotesDataSource
 
-- (NSInteger) dataCount {
-    return self.notes.count;
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    NSManagedObjectContext *context = [[CoreDataStack defaultStack] managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Note" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:@"date" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    
+    [fetchRequest setFetchBatchSize:40];
+    
+    NSFetchedResultsController *theFetchedResultsController =
+    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                        managedObjectContext:context sectionNameKeyPath:nil
+                                                   cacheName:nil];
+    self.fetchedResultsController = theFetchedResultsController;
+    
+    return _fetchedResultsController;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
@@ -26,7 +46,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    Note *note = [self.notes objectAtIndex:indexPath.row];
+    Note *note = self.notes[indexPath.row];
     cell.textLabel.text = note.title;
     cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:note.date
                                                                dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
@@ -37,20 +57,26 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        RLMRealm *realm = RLMRealm.defaultRealm;
-        [realm beginWriteTransaction];
-        NSLog(@"%@",self.notes[indexPath.row]);
-        [realm deleteObject:self.notes[indexPath.row]];
-        [realm commitWriteTransaction];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        Note *note = self.notes[indexPath.row];
+        [[[CoreDataStack defaultStack] managedObjectContext] deleteObject:note];
     }
 }
 
-- (void)updateDataSource
+- (NSArray *)notes
 {
-    self.notes = [[Note allObjects] sortedResultsUsingProperty:@"date" ascending:NO];
+    if (self.searchRequest)
+    {
+        NSError *error;
+        NSArray *results = [[[CoreDataStack defaultStack] managedObjectContext] executeFetchRequest:self.searchRequest error:&error];
+        NSLog(@"%@", error);
+        return results;
+    }
+    else
+    {
+        return [self.fetchedResultsController fetchedObjects];
+    }
 }
+
+
 
 @end

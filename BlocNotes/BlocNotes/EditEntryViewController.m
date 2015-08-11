@@ -59,14 +59,10 @@
 //Recall an instance defaultRealm which contains our databse/information
 - (void)editNote{
 
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    
-    //To write new note to database we must first call beginWritTransaction , add the new object and then commitWriteTransaction. This actually saves the object
-    [realm beginWriteTransaction];
+
     //simply include the property of the textview you want to edit which recalls the body from Note.h
     self.note.body = self.noteBodyTextView.text;
-    [realm commitWriteTransaction];
+    [self.note save];
 }
 
 //Back button returns to previous screen and saves updated info

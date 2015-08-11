@@ -8,24 +8,23 @@
 
 #import "AppDelegate.h"
 #import "Note.h"
+#import "ICloudSyncHelper.h"
 
 @interface AppDelegate ()
+
+@property NSURL *iCloudRoot;
+@property NSURL *iCloudDatabaseFileURL;
+@property bool appDidEnterBackground;
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.diegoa3d.BlocNotes"];
-    NSString *realmPath = [directory.path stringByAppendingPathComponent:@"db.realm"];
-    [RLMRealm setDefaultRealmPath:realmPath];
-    
+    //[RLMRealm setDefaultRealmPath:[ICloudSyncHelper realmDatabaseURL].path];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-
+    
     return YES;
 }
 
@@ -34,26 +33,69 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
+#pragma mark - iCloud Methods
+
+- (void)processiCloudFiles:(NSNotification *)notification {
+    
+    [[ICloudSyncHelper query] disableUpdates];
+    
+    NSDate *iCloudModificationDate = nil;
+    NSArray *results = [ICloudSyncHelper query].results;
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    manager.delegate = self;
+    
+    for (NSMetadataItem *result in results) {
+        NSURL * fileURL = [result valueForAttribute:NSMetadataItemURLKey];
+        iCloudModificationDate = [result valueForAttribute:NSMetadataItemFSContentChangeDateKey];
+        NSNumber * aBool = nil;
+        
+        // Don't include hidden files
+        [fileURL getResourceValue:&aBool forKey:NSURLIsHiddenKey error:nil];
+        if (aBool && ![aBool boolValue]) {
+            self.iCloudDatabaseFileURL = fileURL;
+            break;
+        }
+    }
+    
+    if (!self.iCloudDatabaseFileURL)
+    {
+        [ICloudSyncHelper uploadFileWithURL:[ICloudSyncHelper realmDatabaseURL]];
+    }
+    else
+    {
+        NSError *error;
+        [manager startDownloadingUbiquitousItemAtURL:self.iCloudDatabaseFileURL error:&error];
+        NSLog(@"%@", error);
+    }
+    [RLMRealm setDefaultRealmPath:[ICloudSyncHelper iCloudDatabaseURL].path];
+    [[NSUserDefaults standardUserDefaults] setObject:[ICloudSyncHelper iCloudDatabaseURL].path forKey:@"containerPath"];
+    self.appDidEnterBackground = false;
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+- (void)initializeiCloudAccessWithCompletion:(void (^)(BOOL available)) completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.iCloudRoot = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+        if (self.iCloudRoot != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"iCloud available at: %@", self.iCloudRoot);
+                completion(TRUE);
+            });
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"iCloud not available");
+                completion(FALSE);
+            });
+        }
+    });
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+- (BOOL)fileManager:(NSFileManager *)fileManager shouldProceedAfterError:(NSError *)error copyingItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath{
+    if ([error code] == NSFileWriteFileExistsError)
+        return YES;
+    else
+        return NO;
 }
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
-}
-
-
-
-
 
 @end

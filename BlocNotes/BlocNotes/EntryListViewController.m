@@ -11,15 +11,15 @@
 #import "SearchResultsTableViewController.h"
 #import "NotesDataSource.h"
 #import "EditEntryViewController.h"
+#import "AppDelegate.h"
+#import "CoreDataStack.h"
 
 @interface EntryListViewController ()
 
 //A token is needed to save the data source as well as to be able to recall it
-@property RLMNotificationToken *token;
+
 @property UISearchController *searchController;
 @property NotesDataSource *dataSource;
-@property NSUInteger oldRowNumber;
-//@property (nonatomic, strong) RLMResults *array;
 
 @end
 
@@ -27,21 +27,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.oldRowNumber = 0;
     //instatiate the DataSource and set it to the tableView dataSource
     self.dataSource = [NotesDataSource new];
     self.tableView.dataSource = self.dataSource;
+    self.dataSource.fetchedResultsController.delegate = self;
     
     //instatiate the token and add a notification block to reload data when it has been updated
-    self.token = [[RLMRealm defaultRealm] addNotificationBlock:^(NSString *notification, RLMRealm *realm) {
-        if (self.dataSource.notes.count >= self.oldRowNumber)
-        {
-            [self.tableView reloadData];
-        }
-        self.oldRowNumber = self.dataSource.notes.count;
-    }];
-    [self.dataSource updateDataSource];
-    self.oldRowNumber = self.dataSource.notes.count;
+    NSError *error;
+    [self.dataSource.fetchedResultsController performFetch:&error];
+    if (error)
+    {
+        NSLog(@"%@", error.localizedDescription);
+    }
     
     UINavigationController *searchResultsController = [[self storyboard] instantiateViewControllerWithIdentifier:@"notesTableSearchResultsNavigationController"];
     //Create the search controler and set it to the UINavigationController and place it's position
@@ -58,13 +55,43 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //Add iCloud observers
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storesWillChange) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storesDidChange) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContent:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+}
+
+#pragma mark = iCloud Methods
+- (void)storesWillChange{
+    NSLog(@"/n/nStores Will change notification received/n/n");
+    
+    //Disable UI
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    //Save and reset our context
+    if (self.managedObjectContext.hasChanges) {
+        [self.managedObjectContext save:nil];
+    } else {
+        [self.managedObjectContext reset];
+    }
+}
+
+- (void)storesDidChange{
+    NSLog(@"/n/nStores Did change notification received/n/n");
+    //enable UI
+    [[UIApplication sharedApplication]endIgnoringInteractionEvents];
+    //update UI
+    [self.tableView reloadData];
+}
+
+- (void)mergeContent:(NSNotification *)notification{
+    NSLog(@"Merge content here");
+    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 }
 
 //After the token has been called it must be deallocated
-- (void)dealloc
-{
-    [[RLMRealm defaultRealm] removeNotification:self.token];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -74,21 +101,26 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     NSString *searchString = self.searchController.searchBar.text;
-    RLMResults *filteredNotes = [self updateFilteredContentForSearchedText:searchString];
+    NSFetchRequest *fetchRequest = [self updateFilteredContentForSearchedText:searchString];
     if (self.searchController.searchResultsController)
     {
         UINavigationController *navController = (UINavigationController *)self.searchController.searchResultsController;
-        
         SearchResultsTableViewController *vc = (SearchResultsTableViewController *)navController.topViewController;
-        vc.dataSource.notes = filteredNotes;
+        vc.dataSource.searchRequest = fetchRequest;
         [vc.tableView reloadData];
     }
 
 }
 //Filter method to detect case sensitive words in both the title and the body of the note
-- (RLMResults *)updateFilteredContentForSearchedText:(NSString *)searchedText
+- (NSFetchRequest *)updateFilteredContentForSearchedText:(NSString *)searchedText
 {
-    return [[Note objectsWhere:[NSString stringWithFormat:@"title CONTAINS[c] '%@' OR body CONTAINS[c] '%@'", searchedText, searchedText]] sortedResultsUsingProperty:@"date" ascending:NO];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Note"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title CONTAINS[c] %@ OR body CONTAINS[c] %@", searchedText, searchedText];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:@"date" ascending:NO];
+    [request setPredicate:predicate];
+    [request setSortDescriptors:@[sort]];
+    return request;
 }
 
 //Identify editEntrySeque as the main destination so a cell/note can be modified when searched for
@@ -103,6 +135,57 @@
     }
 }
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
+}
 
 
 /*

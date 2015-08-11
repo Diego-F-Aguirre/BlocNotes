@@ -38,15 +38,8 @@
 - (void)insertNoteTitle{
 
     // Alloc and instatiate the realm note model and set it's properties
-    Note *newNote = [[Note alloc] initWithTitle:self.noteTitle.text body:self.noteBodyTextView.text];
-    
-    //Must instatiate a realm database
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    
-    //To write new note to database we must first call beginWritTransaction , add the new object and then commitWriteTransaction. This actually saves the object
-    [realm beginWriteTransaction];
-    [realm addObject:newNote];
-    [realm commitWriteTransaction];
+    Note *newNote = [Note createNoteWithTitle:self.noteTitle.text body:self.noteBodyTextView.text];
+    [newNote save];
     
 }
 

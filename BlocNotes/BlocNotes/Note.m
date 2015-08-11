@@ -2,54 +2,57 @@
 //  Note.m
 //  BlocNotes
 //
-//  Created by Diego Aguirre on 7/21/15.
+//  Created by Diego Aguirre on 8/10/15.
 //  Copyright (c) 2015 Diego Aguirre. All rights reserved.
 //
 
 #import "Note.h"
+#import "CoreDataStack.h"
+
 
 @implementation Note
 
-// Specify default values for properties
+@dynamic title;
+@dynamic body;
+@dynamic date;
 
-//+ (NSDictionary *)defaultPropertyValues
-//{
-//    return @{};
-//}
-
-// Specify properties to ignore (Realm won't persist these)
-
-//+ (NSArray *)ignoredProperties
-//{
-//    return @[];
-//}
-
-- (instancetype) init
++ (Note *)createNoteWithTitle:(NSString *)title body:(NSString *)body
 {
-    if ([super init])
-    {
-        self.title = @"";
-        self.body = @"";
-        self.date = [NSDate date];
-    }
-    return self;
+    
+    Note *newNote = [self createNote];
+    
+    [newNote setValue:title forKey:@"title"];
+    [newNote setValue:body forKey:@"body"];
+    
+    return newNote;
 }
 
--(instancetype) initWithTitle:(NSString *)title body:(NSString*)body
++ (Note *)createNote
 {
-    if ([self init])
+    NSManagedObjectContext *context = [[CoreDataStack defaultStack] managedObjectContext];
+    Note *note = (Note *) [[NSManagedObject alloc] initWithEntity:[self entityDescription] insertIntoManagedObjectContext:context];
+    
+    [note setValue:@"" forKey:@"title"];
+    [note setValue:@"" forKey:@"body"];
+    [note setValue:[NSDate date] forKey:@"date"];
+    
+    return note;
+}
+
++ (NSEntityDescription *)entityDescription
+{
+    NSManagedObjectContext *context = [[CoreDataStack defaultStack] managedObjectContext];
+    return [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
+}
+
+- (void)save
+{
+    NSError *error;
+   [[[CoreDataStack defaultStack] managedObjectContext] save:&error];
+    if (error)
     {
-        if (title)
-        {
-            self.title = title;
-        }
-        if (body)
-        {
-            self.body = body;
-        }
-       
+        NSLog(@"%@", error.localizedDescription);
     }
-    return self;
 }
 
 @end

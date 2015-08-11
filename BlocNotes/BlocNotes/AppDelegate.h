@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <Realm/Realm.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NSFileManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+- (void)processiCloudFiles:(NSNotification *)notification;
 
 @end
 

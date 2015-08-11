@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+
 //Add UISearchResultsUpdating protocol to update with new user info
-@interface EntryListViewController : UITableViewController <UISearchResultsUpdating, UISearchBarDelegate>
+@interface EntryListViewController : UITableViewController <UISearchResultsUpdating, UISearchBarDelegate, NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @end

@@ -8,16 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		BC16F5741B6692DE000D53E8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC16F5731B6692DE000D53E8 /* MainStoryboard.storyboard */; };
+		BC3B21BF1B7817C0009386B1 /* ICloudSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21BE1B7817C0009386B1 /* ICloudSyncHelper.m */; };
+		BC3B21C01B7822B0009386B1 /* ICloudSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21BE1B7817C0009386B1 /* ICloudSyncHelper.m */; };
+		BC3B21C31B78F10D009386B1 /* NoteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21C11B78F10D009386B1 /* NoteModel.xcdatamodeld */; };
+		BC3B21C41B78F10D009386B1 /* NoteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21C11B78F10D009386B1 /* NoteModel.xcdatamodeld */; };
+		BC3B21C71B78F59C009386B1 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21C61B78F59C009386B1 /* Note.m */; };
+		BC3B21C81B78F59C009386B1 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21C61B78F59C009386B1 /* Note.m */; };
+		BC3B21CB1B78F6C5009386B1 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21CA1B78F6C5009386B1 /* CoreDataStack.m */; };
+		BC3B21CC1B78F6C5009386B1 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3B21CA1B78F6C5009386B1 /* CoreDataStack.m */; };
 		BC5038731B5F2D4000DFA457 /* EntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5038721B5F2D4000DFA457 /* EntryListViewController.m */; };
 		BC5038761B5F2E9400DFA457 /* NewEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5038751B5F2E9400DFA457 /* NewEntryViewController.m */; };
 		BC81E5741B710C0A0095782F /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC81E5731B710C0A0095782F /* ShareViewController.m */; };
 		BC81E5761B710C0A0095782F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC81E5751B710C0A0095782F /* MainInterface.storyboard */; };
 		BC81E5791B710C0A0095782F /* NoteShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC81E56E1B710C0A0095782F /* NoteShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC81E57D1B710C860095782F /* DemoPreprocessor.js in Resources */ = {isa = PBXBuildFile; fileRef = BC81E5681B70FC0F0095782F /* DemoPreprocessor.js */; };
-		BC81E57E1B710E760095782F /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; };
-		BC81E5801B7120050095782F /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFE21B51B5F272D00D33A02 /* Note.m */; };
-		BCAD09611B5FB87300C716CE /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; };
-		BCAD09621B5FB87300C716CE /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BCAD09601B5FB87300C716CE /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BCAD096A1B5FDB7E00C716CE /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAD09691B5FDB7E00C716CE /* SearchResultsTableViewController.m */; };
 		BCAD096D1B5FE2EC00C716CE /* NotesDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAD096C1B5FE2EC00C716CE /* NotesDataSource.m */; };
 		BCAD09701B666CFC00C716CE /* EditEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAD096F1B666CFC00C716CE /* EditEntryViewController.m */; };
@@ -28,7 +32,6 @@
 		BCD4D6ED1B5F232300190118 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCD4D6EC1B5F232300190118 /* Images.xcassets */; };
 		BCD4D6F01B5F232300190118 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCD4D6EE1B5F232300190118 /* LaunchScreen.xib */; };
 		BCD4D6FC1B5F232300190118 /* BlocNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4D6FB1B5F232300190118 /* BlocNotesTests.m */; };
-		BCFE21B61B5F272D00D33A02 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFE21B51B5F272D00D33A02 /* Note.m */; };
 		BCFE21B81B5F27B000D33A02 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFE21B71B5F27B000D33A02 /* libc++.dylib */; };
 /* End PBXBuildFile section */
 
@@ -61,21 +64,17 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BCAD09631B5FB87300C716CE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				BCAD09621B5FB87300C716CE /* Realm.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BC16F5731B6692DE000D53E8 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		BC3B21BD1B7817C0009386B1 /* ICloudSyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICloudSyncHelper.h; sourceTree = "<group>"; };
+		BC3B21BE1B7817C0009386B1 /* ICloudSyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICloudSyncHelper.m; sourceTree = "<group>"; };
+		BC3B21C21B78F10D009386B1 /* NoteModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NoteModel.xcdatamodel; sourceTree = "<group>"; };
+		BC3B21C51B78F59C009386B1 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		BC3B21C61B78F59C009386B1 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		BC3B21C91B78F6C5009386B1 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
+		BC3B21CA1B78F6C5009386B1 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
 		BC5038711B5F2D4000DFA457 /* EntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryListViewController.h; sourceTree = "<group>"; };
 		BC5038721B5F2D4000DFA457 /* EntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryListViewController.m; sourceTree = "<group>"; };
 		BC5038741B5F2E9400DFA457 /* NewEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEntryViewController.h; sourceTree = "<group>"; };
@@ -107,8 +106,6 @@
 		BCD4D6F51B5F232300190118 /* BlocNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlocNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4D6FA1B5F232300190118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCD4D6FB1B5F232300190118 /* BlocNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocNotesTests.m; sourceTree = "<group>"; };
-		BCFE21B41B5F272D00D33A02 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		BCFE21B51B5F272D00D33A02 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		BCFE21B71B5F27B000D33A02 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -117,7 +114,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC81E57E1B710E760095782F /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +121,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCAD09611B5FB87300C716CE /* Realm.framework in Frameworks */,
 				BCFE21B81B5F27B000D33A02 /* libc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,11 +181,13 @@
 		BCD4D6E11B5F232300190118 /* BlocNotes */ = {
 			isa = PBXGroup;
 			children = (
-				BC81E5501B6FD7AE0095782F /* BlocNotes.entitlements */,
+				BC3B21C91B78F6C5009386B1 /* CoreDataStack.h */,
+				BC3B21CA1B78F6C5009386B1 /* CoreDataStack.m */,
+				BC3B21C51B78F59C009386B1 /* Note.h */,
+				BC3B21C61B78F59C009386B1 /* Note.m */,
 				BCD4D6E61B5F232300190118 /* AppDelegate.h */,
 				BCD4D6E71B5F232300190118 /* AppDelegate.m */,
-				BCFE21B41B5F272D00D33A02 /* Note.h */,
-				BCFE21B51B5F272D00D33A02 /* Note.m */,
+				BC3B21C11B78F10D009386B1 /* NoteModel.xcdatamodeld */,
 				BCAD09731B667B2500C716CE /* Objective-C */,
 				BCAD09741B667B2500C716CE /* Swift */,
 				BC5038711B5F2D4000DFA457 /* EntryListViewController.h */,
@@ -207,6 +204,8 @@
 				BCAD09691B5FDB7E00C716CE /* SearchResultsTableViewController.m */,
 				BCAD096B1B5FE2EC00C716CE /* NotesDataSource.h */,
 				BCAD096C1B5FE2EC00C716CE /* NotesDataSource.m */,
+				BC3B21BD1B7817C0009386B1 /* ICloudSyncHelper.h */,
+				BC3B21BE1B7817C0009386B1 /* ICloudSyncHelper.m */,
 			);
 			path = BlocNotes;
 			sourceTree = "<group>";
@@ -214,6 +213,7 @@
 		BCD4D6E21B5F232300190118 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BC81E5501B6FD7AE0095782F /* BlocNotes.entitlements */,
 				BCD4D6E31B5F232300190118 /* Info.plist */,
 				BCD4D6E41B5F232300190118 /* main.m */,
 			);
@@ -264,7 +264,6 @@
 				BCD4D6DB1B5F232300190118 /* Sources */,
 				BCD4D6DC1B5F232300190118 /* Frameworks */,
 				BCD4D6DD1B5F232300190118 /* Resources */,
-				BCAD09631B5FB87300C716CE /* Embed Frameworks */,
 				BCAD09641B5FBA7400C716CE /* Run Script */,
 				BC81E5641B70F02F0095782F /* Embed App Extensions */,
 			);
@@ -319,6 +318,15 @@
 						DevelopmentTeam = HQN23BS377;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -402,8 +410,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC3B21CC1B78F6C5009386B1 /* CoreDataStack.m in Sources */,
+				BC3B21C01B7822B0009386B1 /* ICloudSyncHelper.m in Sources */,
+				BC3B21C41B78F10D009386B1 /* NoteModel.xcdatamodeld in Sources */,
 				BC81E5741B710C0A0095782F /* ShareViewController.m in Sources */,
-				BC81E5801B7120050095782F /* Note.m in Sources */,
+				BC3B21C81B78F59C009386B1 /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,9 +427,12 @@
 				BC5038761B5F2E9400DFA457 /* NewEntryViewController.m in Sources */,
 				BCAD09701B666CFC00C716CE /* EditEntryViewController.m in Sources */,
 				BCAD096A1B5FDB7E00C716CE /* SearchResultsTableViewController.m in Sources */,
+				BC3B21CB1B78F6C5009386B1 /* CoreDataStack.m in Sources */,
+				BC3B21C71B78F59C009386B1 /* Note.m in Sources */,
 				BCD4D6E51B5F232300190118 /* main.m in Sources */,
+				BC3B21BF1B7817C0009386B1 /* ICloudSyncHelper.m in Sources */,
+				BC3B21C31B78F10D009386B1 /* NoteModel.xcdatamodeld in Sources */,
 				BC5038731B5F2D4000DFA457 /* EntryListViewController.m in Sources */,
-				BCFE21B61B5F272D00D33A02 /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +606,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -610,6 +625,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -657,6 +673,7 @@
 				BC81E57C1B710C0B0095782F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BCD4D6DA1B5F232300190118 /* Build configuration list for PBXProject "BlocNotes" */ = {
 			isa = XCConfigurationList;
@@ -686,6 +703,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BC3B21C11B78F10D009386B1 /* NoteModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BC3B21C21B78F10D009386B1 /* NoteModel.xcdatamodel */,
+			);
+			currentVersion = BC3B21C21B78F10D009386B1 /* NoteModel.xcdatamodel */;
+			path = NoteModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BCD4D6D71B5F232300190118 /* Project object */;
 }

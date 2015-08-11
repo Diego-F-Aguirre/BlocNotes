@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <Realm/Realm.h>
 #import "Note.h"
 #import "EntryListViewController.h"
 
@@ -16,8 +15,9 @@
 
 @interface NotesDataSource : NSObject <UITableViewDataSource>
 
-@property (strong, nonatomic) RLMResults *notes;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSFetchRequest *searchRequest;
 
--(void)updateDataSource;
+-(NSArray *)notes;
 
 @end
